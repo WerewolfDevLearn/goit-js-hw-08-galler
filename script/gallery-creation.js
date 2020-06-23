@@ -6,7 +6,6 @@ const lightBox = document.querySelector("div.js-lightbox");
 const lightBoxOverlay = document.querySelector("div.lightbox__overlay");
 const closeBtn = document.querySelector('button[data-action="close-lightbox"]');
 let indexOfImage = -1;
-console.log(images);
 
 function createGallaryItem(image) {
   const itemContainer = document.createElement("li");
@@ -38,21 +37,33 @@ galleryContainer.addEventListener("click", (event) => {
   lightBoxImage.src = `${images[largImgIndex].original}`;
   lightBoxImage.alt = itemRef.alt;
   lightBoxImage.dataset.indexoflargeimage = largImgIndex;
-  console.log(lightBoxImage.dataset.indexoflargeimage);
+  addWindowListener(event);
 });
+
+closeBtn.addEventListener("click", closeModal);
+lightBox.addEventListener("click", closeModal);
 
 function closeModal(event) {
   lightBox.classList.remove("is-open");
   lightBoxImage.src = "";
   lightBoxImage.alt = "";
+  removeWindowListener(event);
 }
-closeBtn.addEventListener("click", closeModal);
-window.addEventListener("keydown", (event) => {
+
+function addWindowListener(event) {
+  window.addEventListener("keydown", changeLargeImageIndex);
+  window.addEventListener("keydown", pressEscBtn);
+}
+function removeWindowListener(event) {
+  window.removeEventListener("keydown", changeLargeImageIndex);
+  window.removeEventListener("keydown", pressEscBtn);
+}
+
+function pressEscBtn(event) {
   if (event.code === "Escape") {
     closeModal(event);
   }
-});
-lightBox.addEventListener("click", closeModal);
+}
 
 function changeLargeImageIndex(event) {
   const currentImgIndex = Number(lightBoxImage.dataset.indexoflargeimage);
@@ -77,5 +88,3 @@ function changeLargeImageIndex(event) {
     }
   }
 }
-
-window.addEventListener("keydown", changeLargeImageIndex);
