@@ -37,24 +37,24 @@ galleryContainer.addEventListener("click", (event) => {
   lightBoxImage.src = `${images[largImgIndex].original}`;
   lightBoxImage.alt = itemRef.alt;
   lightBoxImage.dataset.indexoflargeimage = largImgIndex;
-  addWindowListener(event);
+  addWindowListener();
 });
 
 closeBtn.addEventListener("click", closeModal);
 lightBox.addEventListener("click", closeModal);
 
-function closeModal(event) {
+function closeModal() {
   lightBox.classList.remove("is-open");
   lightBoxImage.src = "";
   lightBoxImage.alt = "";
-  removeWindowListener(event);
+  removeWindowListener();
 }
 
-function addWindowListener(event) {
+function addWindowListener() {
   window.addEventListener("keydown", changeLargeImageIndex);
   window.addEventListener("keydown", pressEscBtn);
 }
-function removeWindowListener(event) {
+function removeWindowListener() {
   window.removeEventListener("keydown", changeLargeImageIndex);
   window.removeEventListener("keydown", pressEscBtn);
 }
